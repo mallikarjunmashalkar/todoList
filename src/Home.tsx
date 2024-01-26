@@ -8,7 +8,6 @@ import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom";
-import { log } from "console";
 
 interface User {
   id: number;
@@ -31,7 +30,6 @@ const Home: React.FC = () => {
   }, [users]);
 
   const total = data.length;
-  console.log(total);
 
   const filterData = data.filter(
     (name: User) =>
@@ -88,7 +86,7 @@ const Home: React.FC = () => {
     e.preventDefault();
     const isItemExist = data.some((user: User) => user.item === item);
     if (isItemExist) {
-      toast.warn(`${item} already exists`, {
+      toast.warn(`${item} already exist`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -124,9 +122,9 @@ const Home: React.FC = () => {
         theme: "light",
         transition: Bounce,
       });
+      setShow1(false);
       setItem("");
     }
-    setShow1(false);
   };
 
   const handleDelete = (id: number) => {
@@ -141,7 +139,7 @@ const Home: React.FC = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteUser({ id: id }));
-        toast.success("Item deleted successfully", {
+        toast.error("Item deleted successfully", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -173,7 +171,7 @@ const Home: React.FC = () => {
         item: uitem,
       })
     );
-    toast.success("Item spdate successfully", {
+    toast.success("Item update successfully", {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -205,6 +203,10 @@ const Home: React.FC = () => {
       updatedData[index + 1] = temp;
       setData(updatedData);
     }
+  };
+
+  const handleCancel = () => {
+    setShow1(false);
   };
 
   return (
@@ -306,7 +308,10 @@ const Home: React.FC = () => {
                   />
                 </Card.Subtitle>
                 <Card.Text>
-                  <button className="btn btn-success" onClick={handleUpdate}>
+                  <button
+                    className="btn btn-success btn-sm"
+                    onClick={handleUpdate}
+                  >
                     Update
                   </button>
                 </Card.Text>
@@ -324,17 +329,27 @@ const Home: React.FC = () => {
                 <Card.Title>
                   <h4>Add New Item</h4>
                 </Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
+                <Card.Subtitle className="mb-2 text-muted mb-2">
                   <input
                     type="text"
                     className="form-control"
+                    placeholder="Enter item"
                     value={item}
                     onChange={(e) => setItem(e.target.value)}
                   />
                 </Card.Subtitle>
                 <Card.Text>
-                  <button className="btn btn-success" onClick={handleAdds}>
+                  <button
+                    className="btn btn-success btn-sm"
+                    onClick={handleAdds}
+                  >
                     Submit
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm ms-4"
+                    onClick={handleCancel}
+                  >
+                    Cancel
                   </button>
                 </Card.Text>
               </Card.Body>
