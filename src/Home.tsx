@@ -8,6 +8,7 @@ import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom";
+import { log } from "console";
 
 interface User {
   id: number;
@@ -30,6 +31,7 @@ const Home: React.FC = () => {
   }, [users]);
 
   const total = data.length;
+  console.log(total);
 
   const filterData = data.filter(
     (name: User) =>
