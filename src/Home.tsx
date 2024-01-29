@@ -19,6 +19,7 @@ const Home: React.FC = () => {
   const [data, setData] = useState<User[]>(users);
   const dispatch = useDispatch();
   const [item, setItem] = useState<string>("");
+  const [date, setDate] = useState<any>("");
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   const [serchBy, setSearchBy] = useState<string>("");
@@ -40,46 +41,6 @@ const Home: React.FC = () => {
   const handleAdd = (e: FormEvent) => {
     e.preventDefault();
     setShow1(true);
-    // const isItemExist = data.some((user: User) => user.item === item);
-    // if (isItemExist) {
-    //   toast.warn(`${item} already exists`, {
-    //     position: "top-right",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //     transition: Bounce,
-    //   });
-    // } else if (item.length === 0) {
-    //   toast.warn("Please enter item", {
-    //     position: "top-right",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //     transition: Bounce,
-    //   });
-    // } else {
-    //   dispatch(addUser({ id: data.length + 1, item }));
-    //   toast.success("Item added successfully", {
-    //     position: "top-right",
-    //     autoClose: 3000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //     transition: Bounce,
-    //   });
-    //   setItem("");
-    // }
   };
 
   const handleAdds = (e: FormEvent) => {
@@ -110,7 +71,7 @@ const Home: React.FC = () => {
         transition: Bounce,
       });
     } else {
-      dispatch(addUser({ id: data.length + 1, item }));
+      dispatch(addUser({ id: data.length + 1, item, date }));
       toast.success("Item added successfully", {
         position: "top-right",
         autoClose: 3000,
@@ -122,6 +83,7 @@ const Home: React.FC = () => {
         theme: "light",
         transition: Bounce,
       });
+      console.log(data);
       setShow1(false);
       setItem("");
     }
@@ -204,7 +166,6 @@ const Home: React.FC = () => {
       setData(updatedData);
     }
   };
-
   const handleCancel = () => {
     setShow1(false);
   };
@@ -217,23 +178,20 @@ const Home: React.FC = () => {
         </Card.Header>
         <Card.Body>
           <form onSubmit={handleAdd}>
-            <input
-              type="text"
-              className=" form-control w-50 mt-2 mb-4"
-              placeholder="Search items"
-              style={{ height: "3rem" }}
-              value={serchBy}
-              onChange={(e) => setSearchBy(e.target.value)}
-            />
+            <div className="row">
+              <div className="col-md-6">
+                <input
+                  type="text"
+                  className="form-control mt-2 mb-4"
+                  placeholder="Search items"
+                  value={serchBy}
+                  onChange={(e) => setSearchBy(e.target.value)}
+                />
+              </div>
+              <div className="col-md-6"></div>
+            </div>
+
             <div className="d-flex justify-content-start">
-              {/* <input
-                type="text"
-                className="form-control w-25 mt-2"
-                style={{ height: "3rem" }}
-                placeholder="Enter item"
-                value={item}
-                onChange={(e) => setItem(e.target.value)}
-              /> */}
               <button type="submit" className="btn btn-info my-3  mb-4">
                 Add Item
               </button>
